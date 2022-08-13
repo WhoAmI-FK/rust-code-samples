@@ -55,6 +55,51 @@ fn main() {
 
     assert_eq!(average,45.1);
     println!("Test passed!");
+
+    let mut letters = ['a','b','c'];
+    letters[0] = 'x';
+    let first_letter = letters[0];
+    println!("first_letter is {}",first_letter);
+
+    let numbers: [i64; 5];
+    numbers = [0;5];
+    let index = numbers.len()-1;
+    println!("{}",numbers[index]);    
+    //let lots = [[1,2,3],
+    //                           [4,5,6]];
+    // tuples  (optional)
+    let mut stuff: (u8,f64,char) = (10,3.14,'x');
+    stuff.0 += 3;
+    let first_item = stuff.0;
+    println!("first_item is {}",first_item);
+
+   // let (a, b, c) = stuff;
+    // like in c++ binding declaration
+    // int a[2] = {1,2};
+    // auto [x,y] = a;
+    say_hello();
+    let a = say_hello;
+    a();
+}
+
+
+fn say_hello() {
+    println!("Hello!");
+    say_number(25);
+}
+
+fn say_number(number: i32)
+{
+    println!("number is {}",number);
+}
+
+fn square(x: i32) -> i32 {
+    x*x
+}
+
+fn celsius_to_fahrenheit(celsius: f64) -> f64
+{
+    (1.8 * celsius) + 32.0   
 }
 
 /*

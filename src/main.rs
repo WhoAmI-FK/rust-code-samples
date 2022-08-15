@@ -80,6 +80,86 @@ fn main() {
     say_hello();
     let a = say_hello;
     a();
+
+    /*
+    let make_x_odd = true;
+    let x;
+
+    if make_x_odd {
+        x = 1;
+    } else {
+        // if you try to comment it, it wouldn't compile Error: use of possibly-uninitialized further in println!
+        x = 2;
+    }
+
+    // we can use
+
+    let x = if make_x_odd {1} else {2};
+
+    */
+
+    let mut count = 0;
+    let result = loop {
+        if count == 1999 {
+            break count * 10;
+        }
+        count+=1;
+        println!("count is {}",count);
+    };
+    println!("After loop count is {}",result);
+
+    count = 0;
+    let letters = ['a','b','c'];
+    while count < letters.len() {
+        println!("letter is {}",letters[count]);
+        count+=1;
+    }
+
+    let message = ['h','e','l','l','o'];
+
+    for item in message.iter().enumerate() {
+        print!("{}",item.1);
+    }
+
+
+
+    let mut mean: f64 = 0.0;
+    let numbers = [1, 9, -2, 0, 23, 20, -7, 13, 37, 20, 56, -18, 20, 3];
+    let mut min:i64 = numbers[0];
+    let mut max:i64 = numbers[0];
+    for &iter in numbers.iter() {
+        min = if iter < min { iter } else { min };
+        max = if iter > max { iter } else { max };
+        mean+=iter as f64; 
+    }
+    mean = mean / numbers.len() as f64;
+    assert_eq!(max,56);
+    assert_eq!(min,-18);
+    assert_eq!(mean, 12.5);
+    println!("\nTests passed!");
+
+    /*
+     Shadowing
+
+     let planet = "Earth";
+     let planet = "Mars";
+     
+     is valid expression
+    */
+    let mut messg = String::from("Earth");
+    messg.push_str(" is home.");
+    println!("{}",messg);
+
+
+    let outer_planet: String;
+    {
+        let mut inner_planet = String::from("Mercury");
+        outer_planet = inner_planet.clone(); // by default moves
+        println!("Inner planet is {}",inner_planet);
+        inner_planet.clear();
+    }
+    println!("outer_planet is {}",outer_planet);
+
 }
 
 

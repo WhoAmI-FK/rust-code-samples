@@ -16,6 +16,14 @@ impl <T,U> Rectangle<T,U> {
     }
 }
 
+
+// impl for a specifc generic type
+impl Rectangle<u8, u8> {
+    fn get_perimeter(&self) -> u8 {
+        2 * self.width + 2 * self.height
+    }
+}
+
 #[derive(Debug)]
 #[derive(Clone)]
 struct Shuttle {

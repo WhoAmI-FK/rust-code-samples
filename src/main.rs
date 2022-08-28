@@ -3,6 +3,43 @@ use rand::prelude::*;
 use std::env;
 use std::fs;
 use std::io::prelude::*;
+
+#[derive(Debug)]
+struct Rectangle<T, U> {
+    width: T,
+    height: U
+}
+
+impl <T,U> Rectangle<T,U> {
+    fn get_width(&self) -> &T {
+        &self.width
+    }
+}
+
+#[derive(Debug)]
+#[derive(Clone)]
+struct Shuttle {
+    name: String,
+    crew_size: u8,
+    propellant: f64
+}
+
+impl Shuttle {
+    fn get_name(&self) -> &str {
+        &self.name
+    }
+
+    fn new(name: &str) -> Shuttle {
+        Shuttle { name: String::from(name), crew_size: (7), propellant: (0.0) }
+    }
+}
+
+
+
+struct Color(u8, u8, u8); // RGB
+
+struct Point(u8, u8, u8); // XYZ
+
 fn main() {
     /*
     *   let (mut) x: u8 (unsigned 8-bit integer)
@@ -248,6 +285,31 @@ fn main() {
     if isNameInFile() {
         println!("YES!");
     }
+
+
+    let mut vehicle = Shuttle {
+        name: String::from("Endeavour"),
+        crew_size: 7,
+        propellant: 835958.0
+    };
+
+    let vehicle2 =  Shuttle {
+        ..vehicle.clone()
+    };
+
+    println!("name {}",vehicle.name);
+    vehicle.name = String::from("Atlantis");
+
+    let red = Color(255, 0, 0);
+    println!("{}",red.0);
+
+
+    let rect = Rectangle {
+        width: 1.2,
+        height: 3.4
+    };
+    println!("rect is {:?}",rect);
+
 }
 
 

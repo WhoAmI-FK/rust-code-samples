@@ -1,3 +1,8 @@
+use std::io;
+use rand::prelude::*;
+use std::env;
+use std::fs;
+use std::io::prelude::*;
 fn main() {
     /*
     *   let (mut) x: u8 (unsigned 8-bit integer)
@@ -169,10 +174,98 @@ fn main() {
     let greetings = String::from("Greetings from Earth!");
     println!("{}",greetings);
 
-    let last_word = &greetings[15..];
+    let last_word = &greetings[15..15+6];
     println!("Slice: {}",last_word);
+
+    let msg_f = String::from("Greetings from Earth!");
+    let first_word = get_first_word(&msg_f);
+    println!("first_word is {}",first_word);
+
+    let mut buffer = String::new();
+    println!("Enter a message: ");
+    io::stdin().read_line(&mut buffer);
+    println!("buffer is {}",buffer);
+
+    let num: i32 = buffer.trim().parse().unwrap();
+    println!("number + 1 is {}",num + 1);
+
+    let nnum = rand::random::<f64>();
+    println!("number is {}",nnum);
+    println!("number is {}",thread_rng().gen_range(1..11));
+
+    
+    let secret_number = rand::thread_rng().gen_range(1..101);
+    let bol = false;
+   if bol {
+    println!("I'm thinking of a number between 1 and 100...");
+    println!("Guess the number: ");
+    loop{
+        let mut guess = String::new();
+        io::stdin().read_line(&mut guess).expect("Failed to read input line.");
+        let guess: u32 = guess.trim().parse().expect("Failed to parse the guess.");
+        
+        if guess > secret_number {
+            println!("\n{} is too high! Guess Lower:",guess);
+        }else if guess < secret_number {
+            println!("\n{} is too low! Guess higher:",guess);
+        }
+        else{
+            println!("\nYou got it! The secret number was {}.",secret_number);
+            break;
+        }
+    }
+    }
+     for(index,argument) in env::args().enumerate() {
+        println!("argument {} is {}", index,argument);
+    }
+
+    if env::args().len() > 2 {
+    let arg2 = env::args().nth(2).unwrap();
+    println!("arg2 is {}", arg2);
+    }
+
+    let contents = fs::read_to_string("planets.txt").unwrap();
+    println!("contents is {}", contents);
+
+    for line in contents.lines() {
+        println!("{}",line);
+    }
+
+    let mut speech = String::new();
+    speech.push_str("We choose to go to the Moon in this decade\n");
+    speech.push_str("and do the other things,\n");
+    speech.push_str("not because they are easy,\n");
+    speech.push_str("but because they are hard.");
+
+    fs::write("speech.txt", speech);
+
+
+    // to append
+//    let mut file = fs::OpenOptions::new().append(true).open("planets.txt").unwrap();
+
+//    file.write(b"\nPluto");
+    
+    if isNameInFile() {
+        println!("YES!");
+    }
 }
 
+
+fn isNameInFile() -> bool {
+    if env::args().len() < 1 {
+        return false;
+    }
+    let Name = env::args().nth(1).unwrap();
+    let contents: String = fs::read_to_string("moonwalkers.txt").unwrap();
+    for name in contents.lines() {
+        if !name.contains(" ") {
+            if name == Name.as_str() {
+                return true;
+            }
+        }
+    } 
+    false
+}
 
 fn process_fuel(propellant: &mut String) -> usize
 {
@@ -205,6 +298,43 @@ fn celsius_to_fahrenheit(celsius: f64) -> f64
 {
     (1.8 * celsius) + 32.0   
 }
+
+fn get_first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+    
+    for(index,&item) in bytes.iter().enumerate() {
+        if item == b' ' || item == b',' || item == b'!' || item == b'?'|| item == b'.'
+        {
+            return &s[..index]; 
+        }
+    }
+
+    &s
+}
+
+
+fn trim_spaces(s: &str) -> &str {
+    let mut start = 0;
+    for(index, character) in s.chars().enumerate() {
+        if character != ' ' {
+            start = index;
+             break;
+        }
+    }
+
+
+    let mut end = 0;
+    for (index, character) in s.chars().rev().enumerate() {
+        if character != ' ' {
+            end = s.len() - index;
+            break;
+        }
+    }
+
+    &s[start..end]
+
+}
+
 
 /*
 *   cargo run - to run the program 
